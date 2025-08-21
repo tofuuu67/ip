@@ -27,14 +27,32 @@ public class Heimerdinger {
                 int listNumber = Integer.parseInt(secondWord);
                 array[listNumber - 1].markAsDone();
                 showList(index, array);
-            } else if (firstWord.equals("unmark") && isNumeric(secondWord)){
+            } else if (firstWord.equals("unmark") && isNumeric(secondWord)) {
                 System.out.println("One step forward, two steps back... Anyways here's your list:");
                 int listNumber = Integer.parseInt(secondWord);
                 array[listNumber - 1].markAsNotDone();
                 showList(index, array);
+            } else if (firstWord.equals("deadline")) {
+                String secondSplit[] = secondWord.split("/by ", 2);
+                String description = secondSplit[0];
+                String deadline = (secondSplit.length > 1) ? secondSplit[1] : "";
+                array[index] = new Deadline(description, deadline);
+                System.out.println("Noted: " + array[index] + "\n");
+                index++;
+            } else if (firstWord.equals("event")) {
+                String secondSplit[] = secondWord.split("/from ", 2);
+                String description = secondSplit[0];
+                String time = (secondSplit.length > 1) ? secondSplit[1] : "";
+
+                String thirdSplit[] = time.split("/to ", 2);
+                String fromDate = thirdSplit[0];
+                String toDate = (thirdSplit.length > 1) ? thirdSplit[1] : "";
+                array[index] = new Event(description, fromDate, toDate);
+                System.out.println("Noted: " + array[index] + "\n");
+                index++;
             } else {
                 System.out.println("Noted: " + input + "\n");
-                array[index] = new Task(input);
+                array[index] = new ToDo(input);
                 index++;
             }
         }
@@ -47,7 +65,7 @@ public class Heimerdinger {
             System.out.println("Hmm its an empty list!");
         } else {
             for (int i = 0; i < listLength; i++) {
-                System.out.println(i + 1 + ".[" + array[i].getStatusIcon() + "] " + array[i].toString());
+                System.out.println(i + 1 + ".[" + array[i].getIcon() + "][" + array[i].getStatusIcon() + "] " + array[i].toString());
             }
             System.out.println("\n");
         }
