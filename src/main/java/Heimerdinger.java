@@ -32,6 +32,10 @@ public class Heimerdinger {
                 int listNumber = Integer.parseInt(secondWord);
                 array[listNumber - 1].markAsNotDone();
                 showList(index, array);
+            } else if (firstWord.equals("todo")) {
+                System.out.println("Noted: " + split[1] + "\n");
+                array[index] = new ToDo(split[1]);
+                index++;
             } else if (firstWord.equals("deadline")) {
                 String secondSplit[] = secondWord.split("/by ", 2);
                 String description = secondSplit[0];
