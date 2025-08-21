@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Heimerdinger {
     public static void main(String[] args) {
@@ -6,9 +7,8 @@ public class Heimerdinger {
 
         System.out.println("Hello! I'm Heimerdinger\nWhat can I do for you?\n");
         Scanner scanner = new Scanner(System.in);
-        Task[] array = new Task[100];
+        ArrayList<Task> array = new ArrayList<>();
         String input;
-        int index = 0;
         while (!end) {
             input = scanner.nextLine();
             String[] split = input.split(" ", 2);
@@ -22,35 +22,56 @@ public class Heimerdinger {
                 if (input.equals("bye")) {
                     break;
                 } else if (input.equals("list")) {
-                    if (index > 0) {
+                    if (!array.isEmpty()) {
                         System.out.println("One step closer to greater understanding! Here's your list:");
-                        showList(index, array);
+                        showList(array);
                     } else {
                         throw new HeimerdingerException("According to my records, the list is currently empty!");
                     }
                 } else if (firstWord.equals("mark")) {
                     if (isNumeric(secondWord)) {
-                        System.out.println("Indeed, a wise choice! Here's your list:");
                         int listNumber = Integer.parseInt(secondWord);
-                        array[listNumber - 1].markAsDone();
-                        showList(index, array);
+                        if (listNumber > 0 && listNumber <= array.size()) {
+                            array.get(listNumber - 1).markAsDone();
+                            System.out.println("Indeed, a wise choice! Here's your list:");
+                            showList(array);
+                        } else {
+                            throw new HeimerdingerException("My calculations indicate that your number is not accessible.");
+                        }
                     } else {
                         throw new HeimerdingerException("Recheck the runes! Index must be a number!");
                     }
                 } else if (firstWord.equals("unmark")) {
                     if (isNumeric(secondWord)) {
-                        System.out.println("One step forward, two steps back... Anyways here's your list:");
                         int listNumber = Integer.parseInt(secondWord);
-                        array[listNumber - 1].markAsNotDone();
-                        showList(index, array);
+                        if (listNumber > 0 && listNumber <= array.size()) {
+                            array.get(listNumber - 1).markAsNotDone();
+                            System.out.println("One step forward, two steps back... Anyways here's your list:");
+                            showList(array);
+                        } else {
+                            throw new HeimerdingerException("My calculations indicate that your number is not accessible.");
+                        }
+                    } else {
+                        throw new HeimerdingerException("Recheck the runes! Index must be a number!");
+                    }
+                } else if (firstWord.equals("delete")) {
+                    if (isNumeric(secondWord)) {
+                        int listNumber = Integer.parseInt(secondWord);
+                        if (listNumber > 0 && listNumber <= array.size()) {
+                            System.out.println("Rogerdonger. Removing list item:");
+                            System.out.println("    [" + array.get(listNumber - 1).getIcon() + "][" + array.get(listNumber - 1).getStatusIcon() + "] " + array.get(listNumber - 1).toString());
+                            array.remove(listNumber - 1);
+                            System.out.println(array.size() + " item(s) in your records now.");
+                        } else {
+                            throw new HeimerdingerException("My calculations indicate that your number is not accessible.");
+                        }
                     } else {
                         throw new HeimerdingerException("Recheck the runes! Index must be a number!");
                     }
                 } else if (firstWord.equals("todo")) {
                     if (!secondWord.isEmpty()) {
                         System.out.println("Noted: " + split[1] + "\n");
-                        array[index] = new ToDo(split[1]);
-                        index++;
+                        array.add(new ToDo(split[1]));
                     } else {
                         throw new HeimerdingerException("I can't read your mind great scientist. ToDo must have an accompanying text!");
                     }
@@ -60,9 +81,9 @@ public class Heimerdinger {
                         String description = secondSplit[0];
                         String deadline = (secondSplit.length > 1) ? secondSplit[1] : "";
                         if (!description.isEmpty() && !deadline.isEmpty()) {
-                            array[index] = new Deadline(description, deadline);
-                            System.out.println("Noted: " + array[index] + "\n");
-                            index++;
+                            Deadline task = new Deadline(description, deadline);
+                            array.add(task);
+                            System.out.println("Noted: " + task + "\n");
                         } else {
                             throw new HeimerdingerException("Need more information for my book of deadlines!");
                         }
@@ -78,9 +99,9 @@ public class Heimerdinger {
                     String fromDate = thirdSplit[0];
                     String toDate = (thirdSplit.length > 1) ? thirdSplit[1] : "";
                     if (!description.isEmpty() && !fromDate.isEmpty() && !toDate.isEmpty()) {
-                        array[index] = new Event(description, fromDate, toDate);
-                        System.out.println("Noted: " + array[index] + "\n");
-                        index++;
+                        Event task = new Event(description, fromDate, toDate);
+                        array.add(task);
+                        System.out.println("Noted: " + task + "\n");
                     } else {
                         throw new HeimerdingerException("Need more information for my book of events!");
                     }
@@ -95,12 +116,12 @@ public class Heimerdinger {
         scanner.close();
     }
 
-    public static void showList(int listLength, Task[] array) {
-        if (listLength == 0) {
-            System.out.println("Hmm its an empty list!");
+    public static void showList(ArrayList<Task> array) {
+        if (array.isEmpty()) {
+            System.out.println("Nothing in your list for now!\n");
         } else {
-            for (int i = 0; i < listLength; i++) {
-                System.out.println(i + 1 + ".[" + array[i].getIcon() + "][" + array[i].getStatusIcon() + "] " + array[i].toString());
+            for (int i = 0; i < array.size(); i++) {
+                System.out.println("    " + (i + 1) + ".[" + array.get(i).getIcon() + "][" + array.get(i).getStatusIcon() + "] " + array.get(i).toString());
             }
             System.out.println();
         }
