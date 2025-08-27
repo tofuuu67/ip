@@ -8,4 +8,8 @@ public class ToDo extends Task {
     public String getIcon() {
         return icon;
     }
+
+    public String getDescription() {
+        return this.description;
+    }
 }

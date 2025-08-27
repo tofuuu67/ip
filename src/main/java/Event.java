@@ -14,6 +14,18 @@ public class Event extends Task {
     }
 
     public String toString() {
-        return this.description + "(from: " + this.fromDate + " to: " + this.toDate + ")";
+        return this.description + " (from: " + this.fromDate + " to: " + this.toDate + ")";
+    }
+
+    public String getFromDate() {
+        return this.fromDate;
+    }
+
+    public String getToDate() {
+        return this.toDate;
+    }
+
+    public String getDescription() {
+        return this.description;
     }
 }
