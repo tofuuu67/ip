@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -7,7 +8,15 @@ public class Heimerdinger {
 
         System.out.println("Hello! I'm Heimerdinger\nWhat can I do for you?\n");
         Scanner scanner = new Scanner(System.in);
-        ArrayList<Task> array = new ArrayList<>();
+
+        Storage storage = new Storage("./data/heimerdinger.txt");
+        ArrayList<Task> array;
+        try {
+            array = storage.load();
+        } catch (IOException e) {
+            System.out.println("Error loading saved files. Starting with new list");
+            array = new ArrayList<>();
+        }
         String input;
         while (!end) {
             input = scanner.nextLine();
@@ -35,6 +44,11 @@ public class Heimerdinger {
                             array.get(listNumber - 1).markAsDone();
                             System.out.println("Indeed, a wise choice! Here's your list:");
                             showList(array);
+                            try {
+                                storage.save(array);
+                            } catch (IOException e) {
+                                System.out.println("Hmmm... there seems to be a problem saving.");
+                            }
                         } else {
                             throw new HeimerdingerException("My calculations indicate that your number is not accessible.");
                         }
@@ -48,6 +62,11 @@ public class Heimerdinger {
                             array.get(listNumber - 1).markAsNotDone();
                             System.out.println("One step forward, two steps back... Anyways here's your list:");
                             showList(array);
+                            try {
+                                storage.save(array);
+                            } catch (IOException e) {
+                                System.out.println("Hmmm... there seems to be a problem saving.");
+                            }
                         } else {
                             throw new HeimerdingerException("My calculations indicate that your number is not accessible.");
                         }
@@ -62,6 +81,11 @@ public class Heimerdinger {
                             System.out.println("    [" + array.get(listNumber - 1).getIcon() + "][" + array.get(listNumber - 1).getStatusIcon() + "] " + array.get(listNumber - 1).toString());
                             array.remove(listNumber - 1);
                             System.out.println(array.size() + " item(s) in your records now.");
+                            try {
+                                storage.save(array);
+                            } catch (IOException e) {
+                                System.out.println("Hmmm... there seems to be a problem saving.");
+                            }
                         } else {
                             throw new HeimerdingerException("My calculations indicate that your number is not accessible.");
                         }
@@ -72,18 +96,28 @@ public class Heimerdinger {
                     if (!secondWord.isEmpty()) {
                         System.out.println("Noted: " + split[1] + "\n");
                         array.add(new ToDo(split[1]));
+                        try {
+                            storage.save(array);
+                        } catch (IOException e) {
+                            System.out.println("Hmmm... there seems to be a problem saving.");
+                        }
                     } else {
                         throw new HeimerdingerException("I can't read your mind great scientist. ToDo must have an accompanying text!");
                     }
                 } else if (firstWord.equals("deadline")) {
                     if (!secondWord.isEmpty()) {
-                        String[] secondSplit = secondWord.split("/by ", 2);
+                        String[] secondSplit = secondWord.split(" /by ", 2);
                         String description = secondSplit[0];
                         String deadline = (secondSplit.length > 1) ? secondSplit[1] : "";
                         if (!description.isEmpty() && !deadline.isEmpty()) {
                             Deadline task = new Deadline(description, deadline);
                             array.add(task);
                             System.out.println("Noted: " + task + "\n");
+                            try {
+                                storage.save(array);
+                            } catch (IOException e) {
+                                System.out.println("Hmmm... there seems to be a problem saving.");
+                            }
                         } else {
                             throw new HeimerdingerException("Need more information for my book of deadlines!");
                         }
@@ -91,17 +125,22 @@ public class Heimerdinger {
                         throw new HeimerdingerException("I can't read your mind great scientist. Deadline must have an accompanying text!");
                     }
                 } else if (firstWord.equals("event")) {
-                    String[] secondSplit = secondWord.split("/from ", 2);
+                    String[] secondSplit = secondWord.split(" /from ", 2);
                     String description = secondSplit[0];
                     String time = (secondSplit.length > 1) ? secondSplit[1] : "";
 
-                    String[] thirdSplit = time.split("/to ", 2);
+                    String[] thirdSplit = time.split(" /to ", 2);
                     String fromDate = thirdSplit[0];
                     String toDate = (thirdSplit.length > 1) ? thirdSplit[1] : "";
                     if (!description.isEmpty() && !fromDate.isEmpty() && !toDate.isEmpty()) {
                         Event task = new Event(description, fromDate, toDate);
                         array.add(task);
                         System.out.println("Noted: " + task + "\n");
+                        try {
+                            storage.save(array);
+                        } catch (IOException e) {
+                            System.out.println("Hmmm... there seems to be a problem saving.");
+                        }
                     } else {
                         throw new HeimerdingerException("Need more information for my book of events!");
                     }

@@ -12,6 +12,14 @@ public class Deadline extends Task {
     }
 
     public String toString() {
-        return this.description + "(by: " + this.deadline + ")";
+        return this.description + " (by: " + this.deadline + ")";
+    }
+
+    public String getDeadline() {
+        return this.deadline;
+    }
+
+    public String getDescription() {
+        return this.description;
     }
 }
