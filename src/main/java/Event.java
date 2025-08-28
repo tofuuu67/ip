@@ -14,7 +14,7 @@ public class Event extends Task {
     }
 
     public String toString() {
-        return this.description + " (from: " + this.fromDate + " to: " + this.toDate + ")";
+        return "[" + this.getIcon() + "][" + this.getStatusIcon() + "] " + this.description + " (from: " + this.fromDate + " to: " + this.toDate + ")";
     }
 
     public String getFromDate() {

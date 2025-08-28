@@ -15,7 +15,7 @@ public class Deadline extends Task {
     }
 
     public String toString() {
-        return this.description + " (by: " + this.deadline.format(DateTimeFormatter.ofPattern("MMM d yyyy")) + ")";
+        return "[" + this.getIcon() + "][" + this.getStatusIcon() + "] " + this.description + " (by: " + this.deadline.format(DateTimeFormatter.ofPattern("MMM d yyyy")) + ")";
     }
 
     public LocalDate getDeadline() {

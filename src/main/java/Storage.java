@@ -10,34 +10,42 @@ public class Storage {
         this.path = Paths.get(filePath);
     }
 
-    public ArrayList<Task> load() throws IOException {
-        Path parent = path.toAbsolutePath().getParent();
-        if (parent != null && !Files.exists(parent)) {
-            Files.createDirectories(parent);
-        }
-        if (!Files.exists(path)) {
-            Files.createFile(path);
-            return new ArrayList<>();
-        }
-        ArrayList<Task> tasks = new ArrayList<>();
-        for (String line: Files.readAllLines(path)) {
-            if (!line.isEmpty()) {
-                tasks.add(read(line));
+    public ArrayList<Task> load() throws HeimerdingerException {
+        try {
+            Path parent = path.toAbsolutePath().getParent();
+            if (parent != null && !Files.exists(parent)) {
+                Files.createDirectories(parent);
             }
+            if (!Files.exists(path)) {
+                Files.createFile(path);
+                return new ArrayList<>();
+            }
+            ArrayList<Task> tasks = new ArrayList<>();
+            for (String line: Files.readAllLines(path)) {
+                if (!line.isEmpty()) {
+                    tasks.add(read(line));
+                }
+            }
+            return tasks;
+        } catch (IOException e) {
+            throw new HeimerdingerException("There seems to be an error in your file: " + path);
         }
-        return tasks;
     }
 
-    public void save(List<Task> tasks) throws IOException {
-        Path parent = path.toAbsolutePath().getParent();
-        if (parent != null && !Files.exists(parent)) {
-            Files.createDirectories(parent);
+    public void save(List<Task> tasks) throws HeimerdingerException {
+        try {
+            Path parent = path.toAbsolutePath().getParent();
+            if (parent != null && !Files.exists(parent)) {
+                Files.createDirectories(parent);
+            }
+            ArrayList<String> lines = new ArrayList<>();
+            for (Task t : tasks) {
+                lines.add(write(t));
+            }
+            Files.write(path, lines);
+        } catch (IOException e) {
+            throw new HeimerdingerException("There seems to be an error in your file: " + path);
         }
-        ArrayList<String> lines = new ArrayList<>();
-        for (Task t : tasks) {
-            lines.add(write(t));
-        }
-        Files.write(path, lines);
     }
 
     private Task read(String line) {
