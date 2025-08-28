@@ -1,5 +1,6 @@
 import java.io.*;
 import java.nio.file.*;
+import java.time.LocalDate;
 import java.util.*;
 
 public class Storage {
@@ -47,7 +48,7 @@ public class Storage {
         if (taskType.equals("T")) {
             task = new ToDo(split[2]);
         } else if (taskType.equals("D")) {
-            task =  new Deadline(split[2], split[3]);
+            task =  new Deadline(split[2], LocalDate.parse(split[3]));
         } else if (taskType.equals("E")) {
             task = new Event(split[2], split[3], split[4]);
         } else {

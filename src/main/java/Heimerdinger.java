@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -47,7 +48,7 @@ public class Heimerdinger {
                             try {
                                 storage.save(array);
                             } catch (IOException e) {
-                                System.out.println("Hmmm... there seems to be a problem saving.");
+                                System.out.println("Hmmm... there seems to be a problem saving.\n");
                             }
                         } else {
                             throw new HeimerdingerException("My calculations indicate that your number is not accessible.");
@@ -65,7 +66,7 @@ public class Heimerdinger {
                             try {
                                 storage.save(array);
                             } catch (IOException e) {
-                                System.out.println("Hmmm... there seems to be a problem saving.");
+                                System.out.println("Hmmm... there seems to be a problem saving.\n");
                             }
                         } else {
                             throw new HeimerdingerException("My calculations indicate that your number is not accessible.");
@@ -80,11 +81,11 @@ public class Heimerdinger {
                             System.out.println("Rogerdonger. Removing list item:");
                             System.out.println("    [" + array.get(listNumber - 1).getIcon() + "][" + array.get(listNumber - 1).getStatusIcon() + "] " + array.get(listNumber - 1).toString());
                             array.remove(listNumber - 1);
-                            System.out.println(array.size() + " item(s) in your records now.");
+                            System.out.println(array.size() + " item(s) in your records now.\n");
                             try {
                                 storage.save(array);
                             } catch (IOException e) {
-                                System.out.println("Hmmm... there seems to be a problem saving.");
+                                System.out.println("Hmmm... there seems to be a problem saving.\n");
                             }
                         } else {
                             throw new HeimerdingerException("My calculations indicate that your number is not accessible.");
@@ -110,9 +111,15 @@ public class Heimerdinger {
                         String description = secondSplit[0];
                         String deadline = (secondSplit.length > 1) ? secondSplit[1] : "";
                         if (!description.isEmpty() && !deadline.isEmpty()) {
-                            Deadline task = new Deadline(description, deadline);
-                            array.add(task);
-                            System.out.println("Noted: " + task + "\n");
+                            try {
+                                LocalDate date = LocalDate.parse(deadline);
+                                Deadline task = new Deadline(description, date);
+                                array.add(task);
+                                System.out.println("Noted: " + task + "\n");
+                            } catch (java.time.format.DateTimeParseException e) {
+                                System.out.println("Would you like some assistance in learning how to write dates? (It's in the 'yyyy-mm-dd' format!)\n");
+                            }
+
                             try {
                                 storage.save(array);
                             } catch (IOException e) {
