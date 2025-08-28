@@ -1,3 +1,7 @@
+package heimerdinger;
+
+import heimerdinger.command.*;
+
 public class Parser {
     public static Command parse(String command) throws HeimerdingerException {
         String[] split = command.split(" ", 2);

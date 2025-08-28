@@ -1,3 +1,9 @@
+package heimerdinger.command;
+
+import heimerdinger.*;
+import heimerdinger.task.Event;
+import heimerdinger.task.TaskList;
+
 public class AddEventCommand extends Command {
     private final String description;
     private final String fromDate;

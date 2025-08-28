@@ -1,3 +1,8 @@
+package heimerdinger;
+
+import heimerdinger.task.Task;
+import heimerdinger.task.TaskList;
+
 import java.util.Scanner;
 
 public class Ui {
@@ -8,7 +13,7 @@ public class Ui {
     }
 
     public void showWelcome() {
-        System.out.println("Hello! I'm Heimerdinger. What can I do for you?\n");
+        System.out.println("Hello! I'm Heimerdinger.Heimerdinger. What can I do for you?\n");
     }
 
     public String readCommand() {

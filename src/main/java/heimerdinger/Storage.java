@@ -1,3 +1,10 @@
+package heimerdinger;
+
+import heimerdinger.task.Deadline;
+import heimerdinger.task.Event;
+import heimerdinger.task.Task;
+import heimerdinger.task.ToDo;
+
 import java.io.*;
 import java.nio.file.*;
 import java.time.LocalDate;

@@ -1,3 +1,9 @@
+package heimerdinger.command;
+
+import heimerdinger.*;
+import heimerdinger.task.Task;
+import heimerdinger.task.TaskList;
+
 public class UnmarkCommand extends Command {
     private final int index;
 

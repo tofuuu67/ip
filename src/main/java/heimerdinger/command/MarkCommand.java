@@ -1,7 +1,13 @@
-public class DeleteCommand extends Command {
+package heimerdinger.command;
+
+import heimerdinger.*;
+import heimerdinger.task.Task;
+import heimerdinger.task.TaskList;
+
+public class MarkCommand extends Command {
     private final int index;
 
-    public DeleteCommand(String arg) throws HeimerdingerException {
+    public MarkCommand(String arg) throws HeimerdingerException {
         if (isNumeric(arg)) {
             this.index = Integer.parseInt(arg) - 1;
         } else {
@@ -13,8 +19,9 @@ public class DeleteCommand extends Command {
         if (index < 0 || index >= tasks.size()) {
             throw new HeimerdingerException("My calculations indicate that your number is not accessible!");
         }
-        Task deleted = tasks.remove(index);
-        ui.showDeleted(deleted, tasks.size());
+        Task marked = tasks.get(index);
+        marked.markAsDone();
+        ui.showMarked(marked, tasks);
         storage.save(tasks.getAll());
     }
 }

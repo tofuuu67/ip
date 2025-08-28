@@ -1,3 +1,5 @@
+package heimerdinger.task;
+
 public class Event extends Task {
     protected String icon = "E";
     protected String fromDate;

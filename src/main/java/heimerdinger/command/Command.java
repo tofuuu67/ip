@@ -1,3 +1,10 @@
+package heimerdinger.command;
+
+import heimerdinger.HeimerdingerException;
+import heimerdinger.Storage;
+import heimerdinger.task.TaskList;
+import heimerdinger.Ui;
+
 public abstract class Command {
     public abstract void execute(TaskList tasks, Ui ui, Storage storage) throws HeimerdingerException;
 

@@ -1,7 +1,7 @@
-import java.io.IOException;
-import java.time.LocalDate;
-import java.util.Scanner;
-import java.util.ArrayList;
+package heimerdinger;
+
+import heimerdinger.command.Command;
+import heimerdinger.task.TaskList;
 
 public class Heimerdinger {
     private Storage storage;
