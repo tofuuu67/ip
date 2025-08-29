@@ -13,9 +13,9 @@ public class AddDeadlineCommand extends Command {
 
     public AddDeadlineCommand(String args) throws HeimerdingerException {
         String[] split = args.split(" /by ", 2);
-        if (split[0].isEmpty() || split.length < 2) {
+        if (split[0].isEmpty()) {
             throw new HeimerdingerException("The deadline requires a description!");
-        } else if (split[1].isEmpty()) {
+        } else if (split.length < 2) {
             throw new HeimerdingerException("The deadline requires a due date!");
         }
         this.description = split[0].trim();
