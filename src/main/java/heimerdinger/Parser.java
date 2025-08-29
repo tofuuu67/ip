@@ -2,7 +2,18 @@ package heimerdinger;
 
 import heimerdinger.command.*;
 
+/**
+ * Responsible for reading input by the user and deciding which command to call.
+ */
 public class Parser {
+
+    /**
+     * Parses the raw input string and chooses appropriate command to call.
+     *
+     * @param command full input provided by user
+     * @return Command object that encapsulates the logic needed to execute user command
+     * @throws HeimerdingerException exception thrown if no appropriate command is given
+     */
     public static Command parse(String command) throws HeimerdingerException {
         String[] split = command.split(" ", 2);
         String commandWord = split[0];
