@@ -23,6 +23,10 @@ public abstract class Task {
 
     public abstract String getIcon();
 
+    public String getDescription() {
+        return this.description;
+    }
+
     public String toString() {
         return this.description;
     }
