@@ -3,11 +3,19 @@ package heimerdinger;
 import heimerdinger.command.Command;
 import heimerdinger.task.TaskList;
 
+/**
+ * Main entry point for the Heimerdinger chatbot.
+ */
 public class Heimerdinger {
     private Storage storage;
     private TaskList tasks;
     private Ui ui;
 
+    /**
+     * Creates a new instance of Heimerdinger object, initialises UI and loads tasks from the specified file path.
+     *
+     * @param filePath The file path where task data is stored.
+     */
     public Heimerdinger(String filePath) {
         ui = new Ui();
         storage = new Storage(filePath);
@@ -19,6 +27,9 @@ public class Heimerdinger {
         }
     }
 
+    /**
+     * Runs the main loop of the Heimerdinger application.
+     */
     public void run() {
         ui.showWelcome();
 
@@ -38,6 +49,11 @@ public class Heimerdinger {
         }
     }
 
+    /**
+     * Entry point of the program.
+     *
+     * @param args Command line arguments which are not used.
+     */
     public static void main(String[] args) {
         new Heimerdinger("./data/tasks.txt").run();
     }

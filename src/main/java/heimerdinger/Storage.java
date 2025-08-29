@@ -10,13 +10,27 @@ import java.nio.file.*;
 import java.time.LocalDate;
 import java.util.*;
 
+/**
+ * Responsible for reading from and writing to a .txt file that contains a list of tasks
+ */
 public class Storage {
     private final Path path;
 
+    /**
+     * Creates a Storage object that contains information about the filePath to access, write, and read from
+     *
+     * @param filePath relative path of the file used to store information about tasks
+     */
     public Storage(String filePath) {
         this.path = Paths.get(filePath);
     }
 
+    /**
+     * Load tasks from the storage file
+     *
+     * @return an ArrayList of tasks obtained from storage file
+     * @throws HeimerdingerException if file cannot be read
+     */
     public ArrayList<Task> load() throws HeimerdingerException {
         try {
             Path parent = path.toAbsolutePath().getParent();
@@ -39,6 +53,12 @@ public class Storage {
         }
     }
 
+    /**
+     * Saves a list of tasks to storage file
+     *
+     * @param tasks list of tasks to be stored
+     * @throws HeimerdingerException if file at filePath cannot be written to
+     */
     public void save(List<Task> tasks) throws HeimerdingerException {
         try {
             Path parent = path.toAbsolutePath().getParent();
@@ -55,6 +75,12 @@ public class Storage {
         }
     }
 
+    /**
+     * Converts a line of text into something readable by the programme
+     *
+     * @param line raw string from the file
+     * @return Task object that corresponds to the raw string
+     */
     private Task read(String line) {
         String[] split = line.split(" \\| ");
         String taskType = split[0];
@@ -75,6 +101,12 @@ public class Storage {
         return task;
     }
 
+    /**
+     * Converts a Task into a string representation
+     *
+     * @param task the task to convert into string format
+     * @return string representation of the task
+     */
     public String write(Task task) {
         String type = task.getIcon();
         String done = task.getStatusIcon().equals("X") ? "1" : "0";
