@@ -36,6 +36,8 @@ public class Parser {
             return new AddDeadlineCommand(args);
         case "event":
             return new AddEventCommand(args);
+        case "find":
+            return new FindCommand(args);
         default:
             throw new HeimerdingerException("I don't seem to understand this archaic language.");
         }

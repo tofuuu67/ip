@@ -96,9 +96,11 @@ public class Ui {
         showTasks(tasks);
     }
 
-    /**
-     * Displays goodbye message when user exits the application.
-     */
+    public void showFoundTasks(TaskList tasks, String word) {
+        System.out.println("Here are the task items that match your target word '" + word + "':");
+        showTasks(tasks);
+    }
+
     public void showGoodbye() {
         System.out.println("For Piltover and science! Goodbye!");
     }
