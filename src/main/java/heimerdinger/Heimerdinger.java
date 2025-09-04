@@ -2,6 +2,9 @@ package heimerdinger;
 
 import heimerdinger.command.Command;
 import heimerdinger.task.TaskList;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Main entry point for the Heimerdinger chatbot.
@@ -56,5 +59,29 @@ public class Heimerdinger {
      */
     public static void main(String[] args) {
         new Heimerdinger("./data/tasks.txt").run();
+    }
+
+    public String getResponse(String input) {
+        // Capture everything printed to System.out during command execution
+        PrintStream originalOut = System.out;
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        PrintStream capture = new PrintStream(buffer, true, StandardCharsets.UTF_8);
+
+        try {
+            System.setOut(capture);
+            try {
+                Command c = Parser.parse(input);
+                c.execute(tasks, ui, storage);   // this prints via Ui -> System.out
+                // Optional: if (c.isExit()) Platform.exit();
+            } catch (HeimerdingerException e) {
+                ui.showError(e.getMessage());    // also goes into the buffer
+            }
+        } finally {
+            System.setOut(originalOut);
+            capture.close();
+        }
+
+        String out = new String(buffer.toByteArray(), StandardCharsets.UTF_8).trim();
+        return out.isEmpty() ? "…" : out;
     }
 }
