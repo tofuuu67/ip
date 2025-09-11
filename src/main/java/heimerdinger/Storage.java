@@ -107,7 +107,7 @@ public class Storage {
      * @param task the task to convert into string format
      * @return string representation of the task
      */
-    public String write(Task task) {
+    public String write(Task task) throws HeimerdingerException {
         String type = task.getIcon();
         String done = task.getStatusIcon().equals("X") ? "1" : "0";
         if (type.equals("T")) {
@@ -116,9 +116,11 @@ public class Storage {
         } else if (type.equals("D")) {
             Deadline deadline = (Deadline) task;
             return type + " | " + done + " | " + deadline.getDescription() + " | " + deadline.getDeadline();
-        } else {
+        } else if (type.equals("E")) {
             Event event = (Event) task;
             return type + " | " + done + " | " + event.getDescription() + " | " + event.getFromDate() + " | " + event.getToDate();
+        } else {
+            throw new HeimerdingerException("There seems to be an error in writing your task to my database.");
         }
     }
 }
