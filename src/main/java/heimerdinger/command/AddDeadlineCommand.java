@@ -24,13 +24,13 @@ public class AddDeadlineCommand extends Command {
 
     public void execute(TaskList tasks, Ui ui, Storage storage) throws HeimerdingerException {
         try {
-            LocalDate date = LocalDate.parse(deadline);
-            Deadline task = new Deadline(description, date);
+            Deadline task = new Deadline(description, deadline);
             tasks.add(task);
             ui.showAdded(task);
             storage.save(tasks.getAll());
         } catch (DateTimeParseException e) {
-            throw new HeimerdingerException("Would you like some assistance in learning how to write dates? (It's in the 'yyyy-mm-dd' format!)");
+            throw new HeimerdingerException("Would you like some assistance in learning how to write dates? " +
+                    "(It's in the 'yyyy-mm-dd'/'yyyy-mm-dd hh:mm' format!)");
         }
     }
 }

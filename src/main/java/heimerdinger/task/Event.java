@@ -1,14 +1,20 @@
 package heimerdinger.task;
 
+import heimerdinger.DateTimeParser;
+import heimerdinger.HeimerdingerException;
+
 public class Event extends Task {
     protected String icon = "E";
-    protected String fromDate;
-    protected String toDate;
+    protected DateTimeParser fromDate;
+    protected DateTimeParser toDate;
 
-    public Event(String description, String fromDate, String toDate) {
+    public Event(String description, String fromDate, String toDate) throws HeimerdingerException {
         super(description);
-        this.fromDate = fromDate;
-        this.toDate = toDate;
+        this.fromDate = DateTimeParser.parse(fromDate);
+        this.toDate = DateTimeParser.parse(toDate);
+        if (this.toDate.isBefore(this.fromDate)) {
+            throw new HeimerdingerException("Your dates are not in chronological order!");
+        }
     }
 
     public String getIcon() {
@@ -16,15 +22,16 @@ public class Event extends Task {
     }
 
     public String toString() {
-        return "[" + this.getIcon() + "][" + this.getStatusIcon() + "] " + this.description + " (from: " + this.fromDate + " to: " + this.toDate + ")";
+        return "[" + this.getIcon() + "][" + this.getStatusIcon() + "] " + this.description +
+                " (from: " + this.fromDate.toString() + " to: " + this.toDate.toString() + ")";
     }
 
-    public String getFromDate() {
-        return this.fromDate;
+    public String fromDateEncode() {
+        return this.fromDate.encode();
     }
 
-    public String getToDate() {
-        return this.toDate;
+    public String toDateEncode() {
+        return this.toDate.encode();
     }
 
     public String getDescription() {

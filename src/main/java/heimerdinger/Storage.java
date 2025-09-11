@@ -81,7 +81,7 @@ public class Storage {
      * @param line raw string from the file
      * @return Task object that corresponds to the raw string
      */
-    private Task read(String line) {
+    private Task read(String line) throws HeimerdingerException {
         String[] split = line.split(" \\| ");
         String taskType = split[0];
         boolean isDone = split[1].equals("1");
@@ -89,7 +89,7 @@ public class Storage {
         if (taskType.equals("T")) {
             task = new ToDo(split[2]);
         } else if (taskType.equals("D")) {
-            task =  new Deadline(split[2], LocalDate.parse(split[3]));
+            task =  new Deadline(split[2], split[3]);
         } else if (taskType.equals("E")) {
             task = new Event(split[2], split[3], split[4]);
         } else {
@@ -115,10 +115,10 @@ public class Storage {
             return type + " | " + done + " | " + todo.getDescription();
         } else if (type.equals("D")) {
             Deadline deadline = (Deadline) task;
-            return type + " | " + done + " | " + deadline.getDescription() + " | " + deadline.getDeadline();
+            return type + " | " + done + " | " + deadline.getDescription() + " | " + deadline.encode();
         } else if (type.equals("E")) {
             Event event = (Event) task;
-            return type + " | " + done + " | " + event.getDescription() + " | " + event.getFromDate() + " | " + event.getToDate();
+            return type + " | " + done + " | " + event.getDescription() + " | " + event.fromDateEncode() + " | " + event.toDateEncode();
         } else {
             throw new HeimerdingerException("There seems to be an error in writing your task to my database.");
         }
