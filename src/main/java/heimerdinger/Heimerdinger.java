@@ -20,6 +20,9 @@ public class Heimerdinger {
      * @param filePath The file path where task data is stored.
      */
     public Heimerdinger(String filePath) {
+        assert filePath != null : "filePath must not be null";
+        assert !filePath.isEmpty() : "filePath must not be empty";
+
         ui = new Ui();
         storage = new Storage(filePath);
         try {
