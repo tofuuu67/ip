@@ -28,7 +28,7 @@ public class Deadline extends Task {
         return this.deadline.encode();
     }
 
-    public String getDescription() {
-        return this.description;
+    public DateTimeParser getDeadline() {
+        return this.deadline;
     }
 }

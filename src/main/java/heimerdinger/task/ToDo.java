@@ -11,10 +11,6 @@ public class ToDo extends Task {
         return icon;
     }
 
-    public String getDescription() {
-        return this.description;
-    }
-
     public String toString() {
         return "[" + this.getIcon() + "][" + this.getStatusIcon() + "] " + this.getDescription();
     }

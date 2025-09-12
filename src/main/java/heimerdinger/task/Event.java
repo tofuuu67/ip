@@ -34,7 +34,11 @@ public class Event extends Task {
         return this.toDate.encode();
     }
 
-    public String getDescription() {
-        return this.description;
+    public DateTimeParser getFromDate() {
+        return this.fromDate;
+    }
+
+    public DateTimeParser getToDate() {
+        return this.toDate;
     }
 }

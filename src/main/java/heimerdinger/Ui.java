@@ -101,6 +101,11 @@ public class Ui {
         showTasks(tasks);
     }
 
+    public void showScheduledTasks(TaskList tasks, String word) {
+        System.out.println("You sure are busy, human. Here is your schedule for " + word + ":");
+        showTasks(tasks);
+    }
+
     public void showGoodbye() {
         System.out.println("For Piltover and science! Goodbye!");
     }
