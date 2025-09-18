@@ -33,9 +33,9 @@ public class DialogBox extends HBox {
         }
 
         // NEW: basic readability + default user alignment
-        setAlignment(Pos.TOP_RIGHT);                // user on the right by default
-        dialog.setWrapText(true);                   // long lines wrap
-        dialog.setMaxWidth(480);                    // keep bubbles from spanning the whole width
+        setAlignment(Pos.TOP_RIGHT);    // user on the right by default
+        dialog.setWrapText(true);       // long lines wrap
+        dialog.setMaxWidth(480);        // keep bubbles from spanning the whole width
 
         dialog.setText(text);
         displayPicture.setImage(img);
@@ -55,10 +55,11 @@ public class DialogBox extends HBox {
         DialogBox db = new DialogBox(text, img);
         // NEW: user bubble styling (subtle blue, white text)
         db.dialog.setStyle(
-                "-fx-background-color: #1d4ed8; " +   // blue
-                        "-fx-text-fill: white; " +
-                        "-fx-background-radius: 12; " +
-                        "-fx-padding: 8 10 8 10;"
+                "-fx-background-color: #1d4ed8; "
+                        + "-fx-text-fill: white; "
+                        + "-fx-background-radius: 12; "
+                        + "-fx-background-radius: 12; "
+                        + "-fx-padding: 8 10 8 10;"
         );
         return db;
     }
@@ -69,10 +70,10 @@ public class DialogBox extends HBox {
 
         // Higher-contrast bot bubble (solid slate, white text)
         db.dialog.setStyle(
-                "-fx-background-color: #4B5563; " +   // grey
-                        "-fx-text-fill: white; " +
-                        "-fx-background-radius: 12; " +
-                        "-fx-padding: 8 10 8 10;"
+                "-fx-background-color: #4B5563; "   // grey
+                        + "-fx-text-fill: white; "
+                        + "-fx-background-radius: 12; "
+                        + "-fx-padding: 8 10 8 10;"
         );
         return db;
     }
@@ -81,10 +82,10 @@ public class DialogBox extends HBox {
         var db = new DialogBox(text, img);
         db.flip(); // errors align like bot messages (left)
         db.dialog.setStyle(
-                "-fx-background-color: #7f1d1d;" +  // deep red
-                        "-fx-text-fill: #ffe4e6;" +
-                        "-fx-background-radius: 12;" +
-                        "-fx-padding: 8 10 8 10;"
+                "-fx-background-color: #7f1d1d;"   // deep red
+                        + "-fx-text-fill: #ffe4e6;"
+                        + "-fx-background-radius: 12;"
+                        + "-fx-padding: 8 10 8 10;"
         );
         return db;
     }

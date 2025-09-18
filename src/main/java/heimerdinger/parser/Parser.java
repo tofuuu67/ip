@@ -1,7 +1,17 @@
 package heimerdinger.parser;
 
 import heimerdinger.HeimerdingerException;
-import heimerdinger.command.*;
+import heimerdinger.command.AddDeadlineCommand;
+import heimerdinger.command.AddEventCommand;
+import heimerdinger.command.AddToDoCommand;
+import heimerdinger.command.Command;
+import heimerdinger.command.DeleteCommand;
+import heimerdinger.command.ExitCommand;
+import heimerdinger.command.FindCommand;
+import heimerdinger.command.ListCommand;
+import heimerdinger.command.MarkCommand;
+import heimerdinger.command.ScheduleCommand;
+import heimerdinger.command.UnmarkCommand;
 
 /**
  * Responsible for reading input by the user and deciding which command to call.

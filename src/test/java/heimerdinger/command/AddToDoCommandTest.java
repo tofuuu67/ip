@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class AddToDoCommandTest {
     @Test
-    public void AddToDoCommand_noDescription_exceptionThrown() {
+    public void addToDoCommand_noDescription_exceptionThrown() {
         try {
             Command c = new AddToDoCommand("");
             Ui ui = new Ui();

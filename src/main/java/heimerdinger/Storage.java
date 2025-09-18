@@ -1,14 +1,19 @@
 package heimerdinger;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.nio.file.AtomicMoveNotSupportedException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
+import java.util.List;
+
 import heimerdinger.task.Deadline;
 import heimerdinger.task.Event;
 import heimerdinger.task.Task;
 import heimerdinger.task.ToDo;
-
-import java.io.*;
-import java.nio.file.*;
-import java.time.LocalDate;
-import java.util.*;
 
 /**
  * Responsible for reading from and writing to a .txt file that contains a list of tasks

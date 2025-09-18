@@ -1,11 +1,12 @@
 package heimerdinger;
 
-import heimerdinger.command.Command;
-import heimerdinger.parser.Parser;
-import heimerdinger.task.TaskList;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
+
+import heimerdinger.command.Command;
+import heimerdinger.parser.Parser;
+import heimerdinger.task.TaskList;
 
 /**
  * Main entry point for the Heimerdinger chatbot.

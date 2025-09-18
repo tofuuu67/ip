@@ -6,6 +6,26 @@ import java.time.format.DateTimeFormatter;
 
 import heimerdinger.HeimerdingerException;
 
+
+/**
+ * Utility class for parsing, formatting, and comparing date/time values.
+ *
+ * <p>Supports two input formats:</p>
+ * <ul>
+ *   <li><b>Date only:</b> {@code yyyy-MM-dd}</li>
+ *   <li><b>Date + time:</b> {@code yyyy-MM-dd HH:mm}</li>
+ * </ul>
+ *
+ * <p>Internally stores the value as a {@link LocalDateTime} with the formatter
+ * that was used to parse it. Provides both user-facing display formatting
+ * and machine-friendly encoding.</p>
+ *
+ * <p>Examples:</p>
+ * <pre>{@code
+ * DateTimeParser d1 = DateTimeParser.parse("2025-10-31");
+ * DateTimeParser d2 = DateTimeParser.parse("2025-10-31 18:00");
+ * }</pre>
+ */
 public class DateTimeParser {
 
     private static final DateTimeFormatter DATE_ONLY =
@@ -16,11 +36,30 @@ public class DateTimeParser {
     private final LocalDateTime date;
     private final DateTimeFormatter format;
 
+    /**
+     * Constructs a {@code DateTimeParser} with a parsed date and format.
+     *
+     * @param date   the parsed {@link LocalDateTime}
+     * @param format the formatter originally used to parse the date
+     */
     public DateTimeParser(LocalDateTime date, DateTimeFormatter format) {
         this.date = date;
         this.format = format;
     }
 
+    /**
+     * Parses a string into a {@code DateTimeParser}.
+     *
+     * <p>Accepted formats are:</p>
+     * <ul>
+     *   <li>{@code yyyy-MM-dd}</li>
+     *   <li>{@code yyyy-MM-dd HH:mm}</li>
+     * </ul>
+     *
+     * @param input the date string to parse
+     * @return a {@code DateTimeParser} wrapping the parsed date
+     * @throws HeimerdingerException if the input cannot be parsed into either format
+     */
     public static DateTimeParser parse(String input) throws HeimerdingerException {
         if (isDateOnly(input)) {
             return new DateTimeParser(LocalDate.parse(input, DATE_ONLY).atStartOfDay(), DATE_ONLY);
@@ -51,6 +90,11 @@ public class DateTimeParser {
         }
     }
 
+    /**
+     * Returns the underlying {@link LocalDateTime}.
+     *
+     * @return the stored date/time
+     */
     public LocalDateTime getLocalDateTime() {
         return this.date;
     }
@@ -59,6 +103,12 @@ public class DateTimeParser {
         return this.format;
     }
 
+    /**
+     * Checks whether this date is strictly before another.
+     *
+     * @param d the other {@code DateTimeParser} to compare against
+     * @return {@code true} if this date is before the other; {@code false} otherwise
+     */
     public boolean isBefore(DateTimeParser d) {
         if (this.date.isBefore(d.date)) {
             return true;
