@@ -65,21 +65,15 @@ public class Heimerdinger {
         new Heimerdinger("./data/tasks.txt").run();
     }
 
-    public String getResponse(String input) {
-        // Capture everything printed to System.out during command execution
+    public String getResponse(String input) throws HeimerdingerException {
         PrintStream originalOut = System.out;
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
         PrintStream capture = new PrintStream(buffer, true, StandardCharsets.UTF_8);
 
+        System.setOut(capture);
         try {
-            System.setOut(capture);
-            try {
-                Command c = Parser.parse(input);
-                c.execute(tasks, ui, storage);   // this prints via Ui -> System.out
-                // Optional: if (c.isExit()) Platform.exit();
-            } catch (HeimerdingerException e) {
-                ui.showError(e.getMessage());    // also goes into the buffer
-            }
+            Command c = Parser.parse(input);   // may throw HeimerdingerException
+            c.execute(tasks, ui, storage);     // may throw HeimerdingerException
         } finally {
             System.setOut(originalOut);
             capture.close();
@@ -88,4 +82,5 @@ public class Heimerdinger {
         String out = new String(buffer.toByteArray(), StandardCharsets.UTF_8).trim();
         return out.isEmpty() ? "…" : out;
     }
+
 }

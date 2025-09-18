@@ -32,6 +32,11 @@ public class DialogBox extends HBox {
             e.printStackTrace();
         }
 
+        // NEW: basic readability + default user alignment
+        setAlignment(Pos.TOP_RIGHT);                // user on the right by default
+        dialog.setWrapText(true);                   // long lines wrap
+        dialog.setMaxWidth(480);                    // keep bubbles from spanning the whole width
+
         dialog.setText(text);
         displayPicture.setImage(img);
     }
@@ -47,12 +52,40 @@ public class DialogBox extends HBox {
     }
 
     public static DialogBox getUserDialog(String text, Image img) {
-        return new DialogBox(text, img);
+        DialogBox db = new DialogBox(text, img);
+        // NEW: user bubble styling (subtle blue, white text)
+        db.dialog.setStyle(
+                "-fx-background-color: #1d4ed8; " +   // blue
+                        "-fx-text-fill: white; " +
+                        "-fx-background-radius: 12; " +
+                        "-fx-padding: 8 10 8 10;"
+        );
+        return db;
     }
 
-    public static DialogBox getDukeDialog(String text, Image img) {
+    public static DialogBox getHeimerdingerDialog(String text, Image img) {
         var db = new DialogBox(text, img);
-        db.flip();
+        db.flip(); // bot on the left
+
+        // Higher-contrast bot bubble (solid slate, white text)
+        db.dialog.setStyle(
+                "-fx-background-color: #4B5563; " +   // grey
+                        "-fx-text-fill: white; " +
+                        "-fx-background-radius: 12; " +
+                        "-fx-padding: 8 10 8 10;"
+        );
+        return db;
+    }
+
+    public static DialogBox getErrorDialog(String text, Image img) {
+        var db = new DialogBox(text, img);
+        db.flip(); // errors align like bot messages (left)
+        db.dialog.setStyle(
+                "-fx-background-color: #7f1d1d;" +  // deep red
+                        "-fx-text-fill: #ffe4e6;" +
+                        "-fx-background-radius: 12;" +
+                        "-fx-padding: 8 10 8 10;"
+        );
         return db;
     }
 }

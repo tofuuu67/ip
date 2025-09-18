@@ -24,7 +24,7 @@ public class MainWindow extends AnchorPane {
     private Heimerdinger heimerdinger;
 
     private Image userImage = new Image(this.getClass().getResourceAsStream("/images/DaUser.png"));
-    private Image dukeImage = new Image(this.getClass().getResourceAsStream("/images/DaDuke.png"));
+    private Image heimerdingerImage = new Image(this.getClass().getResourceAsStream("/images/DaDuke.png"));
 
     @FXML
     public void initialize() {
@@ -43,11 +43,19 @@ public class MainWindow extends AnchorPane {
     @FXML
     private void handleUserInput() {
         String input = userInput.getText();
-        String response = heimerdinger.getResponse(input);
-        dialogContainer.getChildren().addAll(
-                DialogBox.getUserDialog(input, userImage),
-                DialogBox.getDukeDialog(response, dukeImage)
+        dialogContainer.getChildren().add(
+                DialogBox.getUserDialog(input, userImage)
         );
+        try {
+            String response = heimerdinger.getResponse(input);
+            dialogContainer.getChildren().add(
+                    DialogBox.getHeimerdingerDialog(response, heimerdingerImage)
+            );
+        } catch (HeimerdingerException ex) {
+            dialogContainer.getChildren().add(
+                    DialogBox.getErrorDialog(ex.getMessage(), heimerdingerImage)
+            );
+        }
         userInput.clear();
     }
 }
