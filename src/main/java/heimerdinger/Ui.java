@@ -1,9 +1,9 @@
 package heimerdinger;
 
+import java.util.Scanner;
+
 import heimerdinger.task.Task;
 import heimerdinger.task.TaskList;
-
-import java.util.Scanner;
 
 /**
  * Handles the output to be shown to user for all input.
@@ -96,16 +96,31 @@ public class Ui {
         showTasks(tasks);
     }
 
+    /**
+     * Displays tasks that match a search keyword.
+     *
+     * @param tasks the filtered task list
+     * @param word  the keyword used for matching
+     */
     public void showFoundTasks(TaskList tasks, String word) {
         System.out.println("Here are the task items that match your target word '" + word + "':");
         showTasks(tasks);
     }
 
+    /**
+     * Displays tasks scheduled on a given date.
+     *
+     * @param tasks the filtered task list
+     * @param word  the date string that was queried
+     */
     public void showScheduledTasks(TaskList tasks, String word) {
         System.out.println("You sure are busy, human. Here is your schedule for " + word + ":");
         showTasks(tasks);
     }
 
+    /**
+     * Displays the goodbye message when the application exits.
+     */
     public void showGoodbye() {
         System.out.println("For Piltover and science! Goodbye!");
     }

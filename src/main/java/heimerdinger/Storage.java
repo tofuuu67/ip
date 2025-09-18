@@ -53,7 +53,9 @@ public class Storage {
             for (String line : Files.readAllLines(path, java.nio.charset.StandardCharsets.UTF_8)) {
                 lineNo++;
                 String trimmed = line.trim();
-                if (trimmed.isEmpty()) continue;
+                if (trimmed.isEmpty()) {
+                    continue;
+                }
                 try {
                     tasks.add(read(trimmed));
                 } catch (HeimerdingerException ex) {
@@ -136,17 +138,23 @@ public class Storage {
         switch (taskType) {
         case "T" -> {
             // T | done | desc
-            if (p.length < 3) throw new HeimerdingerException("ToDo missing description.");
+            if (p.length < 3) {
+                throw new HeimerdingerException("ToDo missing description.");
+            }
             task = new ToDo(p[2]);
         }
         case "D" -> {
             // D | done | desc | due
-            if (p.length < 4) throw new HeimerdingerException("Deadline missing due date/time.");
+            if (p.length < 4) {
+                throw new HeimerdingerException("Deadline missing due date/time.");
+            }
             task = new Deadline(p[2], p[3]);
         }
         case "E" -> {
             // E | done | desc | from | to
-            if (p.length < 5) throw new HeimerdingerException("Event missing from/to date/time.");
+            if (p.length < 5) {
+                throw new HeimerdingerException("Event missing from/to date/time.");
+            }
             task = new Event(p[2], p[3], p[4]);
         }
         default -> throw new HeimerdingerException("Unknown task type \"" + taskType + "\".");
@@ -176,7 +184,8 @@ public class Storage {
             return type + " | " + done + " | " + deadline.getDescription() + " | " + deadline.encode();
         } else if (type.equals("E")) {
             Event event = (Event) task;
-            return type + " | " + done + " | " + event.getDescription() + " | " + event.fromDateEncode() + " | " + event.toDateEncode();
+            return type + " | " + done + " | " + event.getDescription() + " | "
+                    + event.fromDateEncode() + " | " + event.toDateEncode();
         } else {
             throw new HeimerdingerException("There seems to be an error in writing your task to my database.");
         }

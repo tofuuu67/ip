@@ -117,6 +117,14 @@ public class DateTimeParser {
         }
     }
 
+    /**
+     * Returns a human-readable string for display to the user.
+     *
+     * <p>If stored as a date only, shows {@code "MMM d yyyy"} (e.g., {@code Oct 31 2025}).<br>
+     * If stored as a date with time, shows {@code "MMM d yyyy, HH:mm hrs"}.</p>
+     *
+     * @return a formatted string suitable for UI display
+     */
     public String toString() {
         if (this.format.equals(DATE_ONLY)) {
             DateTimeFormatter displayDate = DateTimeFormatter.ofPattern("MMM d yyyy");
@@ -127,6 +135,14 @@ public class DateTimeParser {
         }
     }
 
+    /**
+     * Returns a machine-friendly encoded string, suitable for storage in files.
+     *
+     * <p>If stored as a date only, encodes as {@code yyyy-MM-dd}.<br>
+     * If stored as a date with time, encodes as {@code yyyy-MM-dd HH:mm}.</p>
+     *
+     * @return an encoded string suitable for persistence
+     */
     public String encode() {
         if (this.format.equals(DATE_ONLY)) {
             DateTimeFormatter displayDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");

@@ -1,12 +1,13 @@
 package heimerdinger.command;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
+
 import heimerdinger.HeimerdingerException;
 import heimerdinger.Storage;
 import heimerdinger.Ui;
 import heimerdinger.task.TaskList;
-import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class AddToDoCommandTest {
     @Test

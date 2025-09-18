@@ -70,11 +70,10 @@ public class Heimerdinger {
         PrintStream originalOut = System.out;
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
         PrintStream capture = new PrintStream(buffer, true, StandardCharsets.UTF_8);
-
         System.setOut(capture);
         try {
-            Command c = Parser.parse(input);   // may throw HeimerdingerException
-            c.execute(tasks, ui, storage);     // may throw HeimerdingerException
+            Command c = Parser.parse(input); // may throw HeimerdingerException
+            c.execute(tasks, ui, storage); // may throw HeimerdingerException
         } finally {
             System.setOut(originalOut);
             capture.close();
@@ -83,5 +82,4 @@ public class Heimerdinger {
         String out = new String(buffer.toByteArray(), StandardCharsets.UTF_8).trim();
         return out.isEmpty() ? "…" : out;
     }
-
 }
