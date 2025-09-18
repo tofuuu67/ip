@@ -1,5 +1,6 @@
-package heimerdinger;
+package heimerdinger.parser;
 
+import heimerdinger.HeimerdingerException;
 import heimerdinger.command.*;
 
 /**

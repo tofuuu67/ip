@@ -1,6 +1,7 @@
 package heimerdinger;
 
 import heimerdinger.command.Command;
+import heimerdinger.parser.Parser;
 import heimerdinger.task.TaskList;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;

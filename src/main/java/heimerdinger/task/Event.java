@@ -1,6 +1,6 @@
 package heimerdinger.task;
 
-import heimerdinger.DateTimeParser;
+import heimerdinger.parser.DateTimeParser;
 import heimerdinger.HeimerdingerException;
 
 public class Event extends Task {

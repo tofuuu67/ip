@@ -1,8 +1,10 @@
-package heimerdinger;
+package heimerdinger.parser;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+
+import heimerdinger.HeimerdingerException;
 
 public class DateTimeParser {
 

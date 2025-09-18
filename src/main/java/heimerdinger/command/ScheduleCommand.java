@@ -1,6 +1,6 @@
 package heimerdinger.command;
 
-import heimerdinger.DateTimeParser;
+import heimerdinger.parser.DateTimeParser;
 import heimerdinger.HeimerdingerException;
 import heimerdinger.Storage;
 import heimerdinger.Ui;

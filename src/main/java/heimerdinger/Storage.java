@@ -31,6 +31,7 @@ public class Storage {
      * @return an ArrayList of tasks obtained from storage file
      * @throws HeimerdingerException if file cannot be read
      */
+    // AI assisted to show where wrong data entry appears
     public ArrayList<Task> load() throws HeimerdingerException {
         try {
             Path parent = path.toAbsolutePath().getParent();
@@ -41,17 +42,27 @@ public class Storage {
                 Files.createFile(path);
                 return new ArrayList<>();
             }
+
             ArrayList<Task> tasks = new ArrayList<>();
-            for (String line: Files.readAllLines(path)) {
-                if (!line.isEmpty()) {
-                    tasks.add(read(line));
+            int lineNo = 0;
+            for (String line : Files.readAllLines(path, java.nio.charset.StandardCharsets.UTF_8)) {
+                lineNo++;
+                String trimmed = line.trim();
+                if (trimmed.isEmpty()) continue;
+                try {
+                    tasks.add(read(trimmed));
+                } catch (HeimerdingerException ex) {
+                    throw new HeimerdingerException("Line " + lineNo + ": " + ex.getMessage());
+                } catch (RuntimeException ex) {
+                    throw new HeimerdingerException("Line " + lineNo + ": malformed entry.");
                 }
             }
             return tasks;
         } catch (IOException e) {
-            throw new HeimerdingerException("There seems to be an error in your file: " + path);
+            throw new HeimerdingerException("Could not read tasks file: " + path);
         }
     }
+
 
     /**
      * Saves a list of tasks to storage file
@@ -59,21 +70,45 @@ public class Storage {
      * @param tasks list of tasks to be stored
      * @throws HeimerdingerException if file at filePath cannot be written to
      */
+    // AI assisted to avoid corruption if app crashes mid write
     public void save(List<Task> tasks) throws HeimerdingerException {
         try {
             Path parent = path.toAbsolutePath().getParent();
             if (parent != null && !Files.exists(parent)) {
                 Files.createDirectories(parent);
             }
-            ArrayList<String> lines = new ArrayList<>();
+
+            // Prepare lines to write
+            List<String> lines = new ArrayList<>(tasks.size());
             for (Task t : tasks) {
                 lines.add(write(t));
             }
-            Files.write(path, lines);
+
+            // Write to a temp file first
+            Path tmp = Files.createTempFile(
+                    parent != null ? parent : path.toAbsolutePath().getParent(),
+                    "tasks-", ".tmp");
+            try (BufferedWriter w = Files.newBufferedWriter(tmp, java.nio.charset.StandardCharsets.UTF_8)) {
+                for (String line : lines) {
+                    w.write(line);
+                    w.newLine();
+                }
+            }
+
+            // Move into place (atomic if supported)
+            try {
+                Files.move(tmp, path,
+                        StandardCopyOption.REPLACE_EXISTING,
+                        StandardCopyOption.ATOMIC_MOVE);
+            } catch (AtomicMoveNotSupportedException e) {
+                // Fallback if filesystem doesn't support atomic moves
+                Files.move(tmp, path, StandardCopyOption.REPLACE_EXISTING);
+            }
         } catch (IOException e) {
-            throw new HeimerdingerException("There seems to be an error in your file: " + path);
+            throw new HeimerdingerException("Failed to save tasks to file: " + path);
         }
     }
+
 
     /**
      * Converts a line of text into something readable by the programme
@@ -81,25 +116,43 @@ public class Storage {
      * @param line raw string from the file
      * @return Task object that corresponds to the raw string
      */
+    // AI assisted to validate field count per task
     private Task read(String line) throws HeimerdingerException {
-        String[] split = line.split(" \\| ");
-        String taskType = split[0];
-        boolean isDone = split[1].equals("1");
-        Task task;
-        if (taskType.equals("T")) {
-            task = new ToDo(split[2]);
-        } else if (taskType.equals("D")) {
-            task =  new Deadline(split[2], split[3]);
-        } else if (taskType.equals("E")) {
-            task = new Event(split[2], split[3], split[4]);
-        } else {
-            throw new IllegalArgumentException("Error in source file");
+        // allow spaces around the delimiter; keep empty fields if any
+        String[] p = line.split("\\s*\\|\\s*", -1);
+        if (p.length < 3) {
+            throw new HeimerdingerException("Not enough fields: \"" + line + "\"");
         }
+
+        String taskType = p[0];
+        boolean isDone = "1".equals(p[1]);
+        Task task;
+
+        switch (taskType) {
+        case "T" -> {
+            // T | done | desc
+            if (p.length < 3) throw new HeimerdingerException("ToDo missing description.");
+            task = new ToDo(p[2]);
+        }
+        case "D" -> {
+            // D | done | desc | due
+            if (p.length < 4) throw new HeimerdingerException("Deadline missing due date/time.");
+            task = new Deadline(p[2], p[3]);
+        }
+        case "E" -> {
+            // E | done | desc | from | to
+            if (p.length < 5) throw new HeimerdingerException("Event missing from/to date/time.");
+            task = new Event(p[2], p[3], p[4]);
+        }
+        default -> throw new HeimerdingerException("Unknown task type \"" + taskType + "\".");
+        }
+
         if (isDone) {
             task.markAsDone();
         }
         return task;
     }
+
 
     /**
      * Converts a Task into a string representation
