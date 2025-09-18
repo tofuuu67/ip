@@ -21,6 +21,8 @@ public class Main extends Application {
             AnchorPane ap = fxmlLoader.load();
             Scene scene = new Scene(ap);
             stage.setScene(scene);
+            stage.setMinHeight(500);
+            stage.setMinWidth(400);
             fxmlLoader.<MainWindow>getController().setHeimerdinger(heimerdinger); // inject the Heimerdinger instance
             stage.show();
         } catch (IOException e) {
