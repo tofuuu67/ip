@@ -23,6 +23,7 @@ public class Main extends Application {
             stage.setScene(scene);
             stage.setMinHeight(500);
             stage.setMinWidth(400);
+            stage.setTitle("Heimerdinger");
             fxmlLoader.<MainWindow>getController().setHeimerdinger(heimerdinger); // inject the Heimerdinger instance
             stage.show();
         } catch (IOException e) {
