@@ -74,7 +74,6 @@ public class DialogBox extends HBox {
                 "-fx-background-color: #1d4ed8; "
                         + "-fx-text-fill: white; "
                         + "-fx-background-radius: 12; "
-                        + "-fx-background-radius: 12; "
                         + "-fx-padding: 8 10 8 10;"
         );
         return db;
