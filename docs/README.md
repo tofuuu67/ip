@@ -1,7 +1,7 @@
 # Heimerdinger — your yordle task chatbot 🧪⚙️
 
 Heimerdinger is a chat-style desktop app that manages your tasks (ToDo / Deadline / Event) through natural, typed commands.
-It replies in a quirky Piltover scientist voice and persists your tasks to disk.
+It replies in a Piltover scientist voice and persists your tasks to disk. For science and progress!
 
 ---
 
