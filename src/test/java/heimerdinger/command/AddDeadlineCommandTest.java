@@ -48,7 +48,7 @@ public class AddDeadlineCommandTest {
             c.execute(tasks, ui, storage);
         } catch (HeimerdingerException e) {
             assertEquals("Would you like some assistance in learning how to write dates? "
-                            + "(It's in the 'yyyy-mm-dd' format!)",
+                            + "(It's in the 'yyyy-mm-dd'/'yyyy-mm-dd hh:mm' format!)",
                     e.getMessage());
         }
     }
@@ -63,7 +63,7 @@ public class AddDeadlineCommandTest {
             c.execute(tasks, ui, storage);
         } catch (HeimerdingerException e) {
             assertEquals("Would you like some assistance in learning how to write dates? "
-                            + "(It's in the 'yyyy-mm-dd' format!)",
+                            + "(It's in the 'yyyy-mm-dd'/'yyyy-mm-dd hh:mm' format!)",
                     e.getMessage());
         }
     }
