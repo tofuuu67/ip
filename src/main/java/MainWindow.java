@@ -1,5 +1,7 @@
 import heimerdinger.Heimerdinger;
 import heimerdinger.HeimerdingerException;
+import javafx.animation.PauseTransition;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
@@ -7,6 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 
 /**
  * Controller for the main GUI.
@@ -60,6 +63,11 @@ public class MainWindow extends AnchorPane {
             dialogContainer.getChildren().add(
                     DialogBox.getHeimerdingerDialog(response, heimerdingerImage)
             );
+            if (input.trim().equals("bye")) {
+                PauseTransition delay = new PauseTransition(Duration.seconds(2)); // wait 2 seconds
+                delay.setOnFinished(event -> Platform.exit());
+                delay.play();
+            }
         } catch (HeimerdingerException ex) {
             dialogContainer.getChildren().add(
                     DialogBox.getErrorDialog(ex.getMessage(), heimerdingerImage)
