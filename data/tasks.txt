@@ -1,3 +1,4 @@
-T | 1 | lol
-D | 1 | keep clothes | 2020-01-10 10:10
-E | 0 | event | 2002-01-01 | 2002-10-10
+T | 1 | Watch T1 vs GENG match
+T | 0 | Queue up for ranked game
+D | 0 | Submit Heimerdinger Chatbot | 2025-09-19 23:59
+E | 0 | Jane Street Event | 2025-09-20 09:00 | 2025-09-20 11:00

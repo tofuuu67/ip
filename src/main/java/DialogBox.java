@@ -12,7 +12,6 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
-import javafx.scene.text.Font;
 
 /**
  * Represents a dialog box consisting of an ImageView to represent the speaker's face
@@ -52,7 +51,6 @@ public class DialogBox extends HBox {
         dialog.setWrapText(true);
         dialog.setMaxWidth(480);
         dialog.setText(text);
-        dialog.setFont(Font.font("Georgia", 12));
         displayPicture.setImage(img);
         displayPicture.setFitHeight(80);
         displayPicture.setFitWidth(80);

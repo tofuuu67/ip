@@ -152,4 +152,13 @@ public class DateTimeParser {
             return date.format(displayDateTime);
         }
     }
+
+    /**
+     * Returns just the date portion (without time).
+     *
+     * @return a {@link LocalDate} representing only the date part.
+     */
+    public LocalDate toLocalDate() {
+        return this.date.toLocalDate();
+    }
 }

@@ -66,8 +66,12 @@ public class ScheduleCommand extends Command {
         TaskList displayList = new TaskList();
         for (int i = 0; i < tasks.size(); i++) {
             Task task = tasks.get(i);
-            if (task instanceof ToDo) {
+            if (task.getStatusIcon().equals("X")) {
                 continue;
+            }
+
+            if (task instanceof ToDo) {
+                displayList.add(task);
             }
 
             if (task instanceof Deadline) {
@@ -80,8 +84,15 @@ public class ScheduleCommand extends Command {
             if (task instanceof Event) {
                 DateTimeParser fromDate = ((Event) task).getFromDate();
                 DateTimeParser toDate = ((Event) task).getToDate();
-                boolean dateInRange = fromDate.isBefore(dateTime) && dateTime.isBefore(toDate);
-                if (dateInRange) {
+                boolean timeInRange =
+                        fromDate.isBefore(dateTime)
+                                && dateTime.isBefore(toDate);
+                boolean dateInRange = (
+                        fromDate.toLocalDate().isBefore(dateTime.toLocalDate())
+                            || fromDate.toLocalDate().isEqual(dateTime.toLocalDate()))
+                                && (toDate.toLocalDate().isAfter(dateTime.toLocalDate())
+                                    || toDate.toLocalDate().isEqual((dateTime.toLocalDate())));
+                if (dateInRange || timeInRange) {
                     displayList.add(task);
                 }
             }
