@@ -26,6 +26,13 @@ public class MainWindow extends AnchorPane {
     private Image userImage = new Image(this.getClass().getResourceAsStream("/images/user.png"));
     private Image heimerdingerImage = new Image(this.getClass().getResourceAsStream("/images/heimerdinger.png"));
 
+    /**
+     * Initializes UI bindings.
+     *
+     * <p>Binds the scroll pane to always stay at the bottom
+     * as new dialog boxes are added, and ensures dialog
+     * boxes expand to fill available width when resized.</p>
+     */
     @FXML
     public void initialize() {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());

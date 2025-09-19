@@ -69,7 +69,7 @@ public class DateTimeParser {
             return new DateTimeParser(LocalDateTime.parse(input, DATE_HH_MM), DATE_HH_MM);
         }
 
-        throw new HeimerdingerException("Invalid datetime provided!");
+        throw new HeimerdingerException("A human ages the same way as a yordle... Anyways invalid datetime provided!");
     }
 
     private static boolean isDateOnly(String input) {

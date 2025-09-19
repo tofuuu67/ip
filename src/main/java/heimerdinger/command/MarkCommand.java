@@ -31,8 +31,8 @@ public class MarkCommand extends Command {
      * @throws HeimerdingerException if the argument is not numeric
      */
     public MarkCommand(String arg) throws HeimerdingerException {
-        if (isNumeric(arg)) {
-            this.index = Integer.parseInt(arg) - 1;
+        if (isNumeric(arg.trim())) {
+            this.index = Integer.parseInt(arg.trim()) - 1;
         } else {
             throw new HeimerdingerException("My precise machinations require a number!");
         }

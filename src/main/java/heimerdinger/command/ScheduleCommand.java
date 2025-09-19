@@ -44,7 +44,7 @@ public class ScheduleCommand extends Command {
      *                 format; must not be {@code null}
      */
     public ScheduleCommand(String dateTime) {
-        this.dateTime = dateTime;
+        this.dateTime = dateTime.trim();
     }
 
     /**

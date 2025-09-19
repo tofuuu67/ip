@@ -12,6 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Font;
 
 /**
  * Represents a dialog box consisting of an ImageView to represent the speaker's face
@@ -23,6 +24,21 @@ public class DialogBox extends HBox {
     @FXML
     private ImageView displayPicture;
 
+    /**
+     * Creates a dialog box with the given text and image.
+     *
+     * <p>Loads its layout from {@code DialogBox.fxml}, and applies defaults:
+     * <ul>
+     *   <li>Top-right alignment</li>
+     *   <li>Word-wrapping enabled</li>
+     *   <li>Max width set to 480px</li>
+     *   <li>Font set to Georgia, size 12</li>
+     *   <li>Profile image resized to 80×80 with padding</li>
+     * </ul>
+     *
+     * @param text message text to display
+     * @param img  profile image associated with the message
+     */
     private DialogBox(String text, Image img) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(MainWindow.class.getResource("/view/DialogBox.fxml"));
@@ -36,6 +52,7 @@ public class DialogBox extends HBox {
         dialog.setWrapText(true);
         dialog.setMaxWidth(480);
         dialog.setText(text);
+        dialog.setFont(Font.font("Georgia", 12));
         displayPicture.setImage(img);
         displayPicture.setFitHeight(80);
         displayPicture.setFitWidth(80);
